@@ -1,6 +1,6 @@
 from __future__ import print_function
-import sys
 import os
+
 
 ALIAS_DIR = os.path.dirname(__file__)
 
@@ -14,8 +14,8 @@ def printAlias(name):
         for i, line in enumerate(f):
             # Alias value is always the 4th line
             if i == 3:
-                # Strip off " %*" from line
-                print("alias {}='{}'".format(name, line[:-3]))
+                # Strip off " %*\n" from line
+                print("alias {}={}".format(name, line[:-4]))
                 break
 
 
@@ -26,15 +26,17 @@ def main(args):
                 printAlias(cmd[:-4])
         return
 
-    if args.name.find('=') != -1:
+    args_name = ' '.join(args.name)
+    print(args_name)
+
+    if args_name.find('=') != -1:
         # '=' in arg, create .cmd for alias
-        name, cmd = args.name.split('=', 1)
+        name, cmd = args_name.split('=', 1)
 
         # Remove quotes around value, if present
-        if cmd[0] == cmd[-1] and cmd[0] in "'\"":
-            cmd = cmd[1:-1]
+        # if cmd[0] == cmd[-1] and cmd[0] in "'\"":
+            # cmd = cmd[1:-1]
 
-        print(ALIAS_DIR, name)
         # Opening with 'w' will overwite
         with open('{}\\{}.cmd'.format(ALIAS_DIR, name), 'w') as f:
             f.write('@echo off\n')
@@ -51,7 +53,7 @@ def main(args):
 
     else:
         # Just name of alias, print it
-        printAlias(args.name)
+        printAlias(args_name)
 
 
 if __name__ == "__main__":
@@ -63,7 +65,6 @@ if __name__ == "__main__":
     )
 
     parser.add_argument('-p', action='store_true')
-
-    parser.add_argument('name', nargs='?')
+    parser.add_argument('name', nargs='*')
 
     main(parser.parse_args())
