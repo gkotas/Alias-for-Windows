@@ -1,5 +1,5 @@
 # Alias for Windows
-This is my implementation to mimic bash's built-in [alias](https://ss64.com/bash/alias.html) command.
+This is my implementation to mimic bash's built-in [alias](https://ss64.com/bash/alias.html) and unalias commands.
 The syntax is meant to be as similar to the built-in command as possible. Additional arguments will work as intended.
 See the Known Issues section for more details.
 
@@ -12,6 +12,11 @@ See the Known Issues section for more details.
 Adding `ls` instead of `dir`:
 ```
 alias ls=dir
+```
+
+Removing the `ls` alias:
+```
+unalias ls
 ```
 
 Opening Notepad++ with `npp`:
